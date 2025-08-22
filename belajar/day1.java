@@ -68,6 +68,7 @@ public class day1 {
     public static void main(String[] args) {
         day1 myObj = new day1();
         System.out.println(myObj.x);
+        System.out.println(myObj.x);
     }
 
 }
