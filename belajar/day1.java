@@ -51,4 +51,16 @@ public class day1 {
     // System.out.println("double : " + myNum2);
     // }
 
+    public static void main(String[] args) {
+        // int x = 100;
+        // System.out.println(x);
+
+        int x = 0;
+        for (int i = 0; i < 5; i++) {
+            System.out.println(i);
+            x = x + i;
+        }
+        System.out.println("total x :" + x);
+    }
+
 }
