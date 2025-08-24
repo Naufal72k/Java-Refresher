@@ -11,18 +11,32 @@ public class Main {
     // System.out.println("Name: " + myObj.fname + " " + myObj.lname);
     // System.out.println("Age: " + myObj.age);
     // }
-    static void myStaticMethod() {
-        System.out.println("ini static");
+    // static void myStaticMethod() {
+    // System.out.println("ini static");
 
+    // }
+
+    // public void myPublicMethode() {
+    // System.out.println("ini public method");
+    // }
+
+    // public static void main(String[] args) {
+    // Main myObj = new Main();
+
+    // myObj.myPublicMethode();
+    // }
+
+    public void fullThrottle() {
+        System.out.println("The car is going as fast as it can!");
     }
 
-    public void myPublicMethode() {
-        System.out.println("ini public method");
+    public void speed(int maxSpeed) {
+        System.out.println("Max speed is: " + maxSpeed);
     }
 
     public static void main(String[] args) {
-        Main myObj = new Main();
-
-        myObj.myPublicMethode();
+        Main myCar = new Main();
+        myCar.fullThrottle();
+        myCar.speed(200);
     }
 }
