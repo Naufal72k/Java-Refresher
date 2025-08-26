@@ -1,9 +1,12 @@
 package Java_Oop;
 
-public class Second {
+class Second {
     public static void main(String[] args) {
-        Main myCar = new Main();
-        myCar.fullThrottle();
-        myCar.speed(200);
+        Student myObj = new Student();
+        System.out.println("Name: " + myObj.fname);
+        System.out.println("Age: " + myObj.age);
+        System.out.println("Graduation Year: " + myObj.graduationYear);
+        myObj.study();
     }
+
 }
