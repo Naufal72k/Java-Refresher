@@ -1,4 +1,4 @@
-package Java_Oop;
+package Java_Oop.Modifier;
 
 public class Modifiers {
     final int x = 10;

@@ -1,4 +1,4 @@
-package Java_Oop;
+package Java_Oop.Abstract;
 
 abstract class Abstract {
     public String fname = "john";

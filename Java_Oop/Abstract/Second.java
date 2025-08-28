@@ -1,4 +1,4 @@
-package Java_Oop;
+package Java_Oop.Abstract;
 
 class Second {
     public static void main(String[] args) {
