@@ -26,5 +26,16 @@ class Main {
         myAnimal.animalSound();
         myPig.animalSound();
         myDog.animalSound();
+
+        // jika polimorisme bisa dia di jadiin satu objek, entr masuk kedalam array,
+        // kalo ga pake poli nanti lama kita nulisnya
+        Animal[] myAnimals = new Animal[3];
+        myAnimals[0] = new Animal();
+        myAnimals[1] = new Pig();
+        myAnimals[2] = new Dog();
+
+        for (Animal animal : myAnimals) {
+            animal.animalSound();
+        }
     }
 }
