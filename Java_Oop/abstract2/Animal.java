@@ -1,17 +1,31 @@
 package Java_Oop.abstract2;
 
+// abstract class Animal {
+//     public abstract void animalSound();
+
+//     public void sleep() {
+//         System.out.println("zzz");
+//     }
+// }
+
 abstract class Animal {
     public abstract void animalSound();
 
     public void sleep() {
-        System.out.println("zzz");
+        System.out.println("zzzzzzzz");
     }
 }
 // Animal myObj = new Animal(); // gabisa kita langsung manggil kek obj biasanya
 
+// class Pig extends Animal {
+// public void animalSound() {
+// System.out.println("the pig says: weeeeee");
+// }
+// }
+
 class Pig extends Animal {
     public void animalSound() {
-        System.out.println("the pig says: weeeeee");
+        System.out.println("The pig says : weeeeee");
     }
 }
 
