@@ -33,7 +33,6 @@ public class BinaryTree {
 
     public void inorder() {
         inorderRec(root);
-        System.out.println();
     }
 
     private void inorderRec(Node current) {
