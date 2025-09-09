@@ -59,25 +59,29 @@ public class Sorting {
     }
 
     public void insertionSort() {
-        if (head == null || head.next == null)
-            return;
-        Node sorted = null;
-        Node current = head;
-        while (current != null) {
-            Node next = current.next;
-            if (sorted == null || current.data < sorted.data) {
-                current.next = sorted;
-                sorted = current;
-            } else {
-                Node temp = sorted;
-                while (temp.next != null && temp.next.data < current.data) {
-                    temp = temp.next;
-                }
-                current.next = temp.next;
-                temp.next = current;
-            }
-            current = next;
+        if (head == null || head.next == null) {
+            System.out.println("masi kosong");
         }
-        head = sorted;
+
+        else {
+            Node sorted = null;
+            Node current = head;
+            while (current != null) {
+                Node next = current.next;
+                if (sorted == null || current.data < sorted.data) {
+                    current.next = sorted;
+                    sorted = current;
+                } else {
+                    Node temp = sorted;
+                    while (temp.next != null && temp.next.data < current.data) {
+                        temp = temp.next;
+                    }
+                    current.next = temp.next;
+                    temp.next = current;
+                }
+                current = next;
+            }
+            head = sorted;
+        }
     }
 }
