@@ -1,4 +1,4 @@
-package linierSort;
+package linierSearch;
 
 public class Node {
 
