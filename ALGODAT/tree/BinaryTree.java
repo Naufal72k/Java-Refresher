@@ -1,7 +1,5 @@
 package tree;
 
-package tree;
-
 public class BinaryTree {
     Node root;
 
