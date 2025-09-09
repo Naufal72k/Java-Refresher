@@ -1,5 +1,7 @@
 package tree;
 
+package tree;
+
 public class BinaryTree {
     Node root;
 
@@ -7,9 +9,7 @@ public class BinaryTree {
         this.root = null;
     }
 
-    // method untuk insert data
     public void insert(int data) {
-        // kalau root masih kosong, langsung isi
         if (root == null) {
             root = new Node(data);
         } else {
@@ -17,28 +17,22 @@ public class BinaryTree {
         }
     }
 
-    // rekursif untuk cari tempat yang tepat
     private void insertRec(Node current, int data) {
-        // kalau data lebih kecil, masuk ke kiri
         if (data < current.data) {
             if (current.left == null) {
                 current.left = new Node(data);
             } else {
                 insertRec(current.left, data);
             }
-        }
-        // kalau data lebih besar, masuk ke kanan
-        else if (data > current.data) {
+        } else if (data > current.data) {
             if (current.right == null) {
                 current.right = new Node(data);
             } else {
                 insertRec(current.right, data);
             }
         }
-        // kalau sama, kita abaikan (opsional)
     }
 
-    // tampilkan inorder (kiri - root - kanan)
     public void inorder() {
         inorderRec(root);
         System.out.println();
@@ -50,5 +44,52 @@ public class BinaryTree {
             System.out.print(current.data + " ");
             inorderRec(current.right);
         }
+    }
+
+    public void preorder() {
+        preorderRec(root);
+        System.out.println();
+    }
+
+    private void preorderRec(Node current) {
+        if (current != null) {
+            System.out.print(current.data + " ");
+            preorderRec(current.left);
+            preorderRec(current.right);
+        }
+    }
+
+    public void postorder() {
+        postorderRec(root);
+        System.out.println();
+    }
+
+    private void postorderRec(Node current) {
+        if (current != null) {
+            postorderRec(current.left);
+            postorderRec(current.right);
+            System.out.print(current.data + " ");
+        }
+    }
+
+    public void levelOrder() {
+        if (root == null)
+            return;
+
+        java.util.Queue<Node> queue = new java.util.LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            System.out.print(current.data + " ");
+
+            if (current.left != null) {
+                queue.add(current.left);
+            }
+            if (current.right != null) {
+                queue.add(current.right);
+            }
+        }
+        System.out.println();
     }
 }
