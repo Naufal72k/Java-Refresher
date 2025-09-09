@@ -70,24 +70,4 @@ public class BinaryTree {
         }
     }
 
-    public void levelOrder() {
-        if (root == null)
-            return;
-
-        java.util.Queue<Node> queue = new java.util.LinkedList<>();
-        queue.add(root);
-
-        while (!queue.isEmpty()) {
-            Node current = queue.poll();
-            System.out.print(current.data + " ");
-
-            if (current.left != null) {
-                queue.add(current.left);
-            }
-            if (current.right != null) {
-                queue.add(current.right);
-            }
-        }
-        System.out.println();
-    }
 }
