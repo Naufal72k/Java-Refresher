@@ -5,7 +5,7 @@ import java.util.zip.ZipOutputStream;
 public class coba {
 
     public static void archiveFolder(String tempatFile, String tempatZip) throws IOException {
-        System.out.println("\nMemulai proses pengarsipan...");
+        System.out.println("\nproses");
         long waktuMulai = System.currentTimeMillis();
 
         FileOutputStream fos = new FileOutputStream(tempatZip);
@@ -54,12 +54,9 @@ public class coba {
             long waktuAkhir = System.currentTimeMillis();
             long durasi = waktuAkhir - waktuMulai;
 
-            // Informasi hasil
-            System.out.println("\n=============================================");
             System.out.println("  PROSES SELESAI!  ");
-            System.out.println("Folder berhasil diarsipkan ke: " + tempatZip);
-            System.out.println("Waktu yang dibutuhkan: " + durasi + " milidetik.");
-            System.out.println("=============================================");
+            System.out.println("tempat zip " + tempatZip);
+            System.out.println("Waktu: " + durasi + " milidetik.");
 
         } catch (IOException e) {
             throw e;
@@ -67,10 +64,6 @@ public class coba {
     }
 
     public static void main(String[] args) {
-
-        System.out.println("=============================================");
-        System.out.println("  Program Pengarsip Catatan Mahasiswa (Teks -> ZIP)  ");
-        System.out.println("=============================================");
 
         String tempatFile = "C:\\Users\\lenov\\OneDrive\\Desktop\\Github\\Java-Refresher\\PROGNET\\stream";
 
