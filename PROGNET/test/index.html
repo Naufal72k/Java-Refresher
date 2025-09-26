@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Media Streamer</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .fade-in {
+        animation: fadeIn 0.8s ease both;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 px-6"
+  >
+    <!-- Simple Elegant Section -->
+    <section
+      class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 fade-in"
+    >
+      <div class="text-center mb-6">
+        <div
+          class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center text-white text-2xl font-bold shadow-md"
+        >
+          M
+        </div>
+        <h1 class="mt-4 text-2xl font-semibold text-slate-800">
+          Media Streamer
+        </h1>
+        <p class="text-sm text-slate-500">
+          Masukkan URL audio/video untuk diputar
+        </p>
+      </div>
+
+      <!-- Input URL -->
+      <form action="#" method="get" class="space-y-4">
+        <label class="block text-sm">
+          <span class="text-slate-600 text-xs">Media URL</span>
+          <input
+            type="url"
+            name="mediaUrl"
+            required
+            placeholder="https://example.com/media.mp3"
+            class="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </label>
+
+        <button
+          type="submit"
+          class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-500 text-white font-semibold shadow-md hover:opacity-90 transition"
+        >
+          ▶️ Play
+        </button>
+      </form>
+
+      <!-- Player Controls (UI Only, no JS) -->
+      <div class="mt-8 bg-slate-100 rounded-xl p-4 shadow-inner">
+        <div class="flex justify-center gap-3 mb-4">
+          <button
+            class="px-3 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700"
+          >
+            ▶️
+          </button>
+          <button class="px-3 py-2 rounded-md bg-slate-300 hover:bg-slate-400">
+            ⏸
+          </button>
+          <button class="px-3 py-2 rounded-md bg-slate-300 hover:bg-slate-400">
+            ⏹
+          </button>
+        </div>
+        <input type="range" class="w-full mb-2" value="30" min="0" max="100" />
+        <div class="flex justify-between text-xs text-slate-500">
+          <span>0:30</span>
+          <span>3:45</span>
+        </div>
+        <div class="flex items-center gap-2 mt-3">
+          <span class="text-xs text-slate-600">🔊</span>
+          <input type="range" class="flex-1" value="70" min="0" max="100" />
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
