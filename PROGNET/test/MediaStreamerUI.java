@@ -1,146 +1,164 @@
-package test;
+import java.net.*;
 
-import javax.swing.*;
-import java.awt.*;
+import java.io.*;
 
-public class MediaStreamerUI extends JFrame {
+public class MediaStreamerUI {
 
-    // Panel custom dengan rounded corner
-    static class RoundedPanel extends JPanel {
-        private int cornerRadius;
-        private Color bgColor;
+    public static void main(String args[]) {
 
-        public RoundedPanel(int radius, Color bgColor) {
-            super();
-            this.cornerRadius = radius;
-            this.bgColor = bgColor;
-            setOpaque(false);
-        }
+        String nextLine;
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(bgColor);
-            g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
-        }
-    }
+        URL url = null;
 
-    public MediaStreamerUI() {
-        setTitle("Media Streamer");
-        setSize(420, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        URLConnection urlConn = null;
 
-        // Background gradasi
-        JPanel bgPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
-                GradientPaint gp = new GradientPaint(
-                        0, 0, new Color(79, 70, 229),
-                        getWidth(), getHeight(), new Color(147, 51, 234));
-                g2d.setPaint(gp);
-                g2d.fillRect(0, 0, getWidth(), getHeight());
+        InputStreamReader inStream = null;
+
+        BufferedReader buff = null;
+
+        try {
+
+            // index.html adalah nama file default dari URL
+
+            url = new URL("http://www.google.com");
+
+            urlConn = url.openConnection();
+
+            inStream = new InputStreamReader(urlConn.getInputStream(), "UTF8");
+
+            buff = new BufferedReader(inStream);
+
+            // Membaca dan mencetak tiap baris dari index.html
+
+            while (true) {
+
+                nextLine = buff.readLine();
+
+                if (nextLine != null) {
+
+                    System.out.println(nextLine);
+
+                } else {
+
+                    break;
+
+                }
+
             }
-        };
-        bgPanel.setLayout(new GridBagLayout());
 
-        // Card putih rounded
-        RoundedPanel card = new RoundedPanel(30, Color.WHITE);
-        card.setPreferredSize(new Dimension(360, 500));
-        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        } catch (MalformedURLException e) {
 
-        // Logo M
-        RoundedPanel logoPanel = new RoundedPanel(20, new Color(99, 102, 241));
-        logoPanel.setPreferredSize(new Dimension(70, 70));
-        logoPanel.setMaximumSize(new Dimension(70, 70));
-        logoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            System.out.println("Cek kembali URL:" + e.toString());
 
-        JLabel logoLabel = new JLabel("M", SwingConstants.CENTER);
-        logoLabel.setForeground(Color.WHITE);
-        logoLabel.setFont(new Font("SansSerif", Font.BOLD, 26));
-        logoPanel.setLayout(new GridBagLayout());
-        logoPanel.add(logoLabel);
-        card.add(logoPanel);
+        } catch (IOException e1) {
 
-        // Judul
-        card.add(Box.createVerticalStrut(10));
-        JLabel title = new JLabel("Media Streamer", SwingConstants.CENTER);
-        title.setFont(new Font("SansSerif", Font.BOLD, 22));
-        title.setForeground(new Color(51, 51, 51));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        card.add(title);
+            System.out.println("Tidak dapat membaca dari Internet: " +
 
-        JLabel subtitle = new JLabel("Masukkan URL audio/video untuk diputar");
-        subtitle.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        subtitle.setForeground(new Color(100, 100, 100));
-        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-        card.add(subtitle);
+                    e1.toString());
 
-        // Input URL
-        card.add(Box.createVerticalStrut(20));
-        JLabel urlLabel = new JLabel("Media URL:");
-        urlLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        urlLabel.setForeground(new Color(80, 80, 80));
-        JTextField urlField = new JTextField("https://example.com/media.mp3");
-        urlField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        urlField.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-        card.add(urlLabel);
-        card.add(Box.createVerticalStrut(5));
-        card.add(urlField);
+        } finally {
 
-        // Tombol Play utama
-        card.add(Box.createVerticalStrut(15));
-        JButton playButton = new JButton("▶️ Play");
-        playButton.setBackground(new Color(99, 102, 241));
-        playButton.setForeground(Color.WHITE);
-        playButton.setFocusPainted(false);
-        playButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-        playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        playButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        card.add(playButton);
+            if (inStream != null) {
 
-        // Panel kontrol
-        card.add(Box.createVerticalStrut(25));
-        JPanel controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
-        controls.setOpaque(false);
-        JButton btnPlay = new JButton("▶️");
-        JButton btnPause = new JButton("⏸");
-        JButton btnStop = new JButton("⏹");
-        controls.add(btnPlay);
-        controls.add(btnPause);
-        controls.add(btnStop);
-        card.add(controls);
+                try {
 
-        // Slider progress
-        JSlider progressSlider = new JSlider(0, 100, 30);
-        JLabel timeLabel = new JLabel("0:30 / 3:45", SwingConstants.CENTER);
-        timeLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        timeLabel.setForeground(new Color(120, 120, 120));
-        card.add(progressSlider);
-        card.add(timeLabel);
+                    inStream.close();
 
-        // Volume slider
-        card.add(Box.createVerticalStrut(10));
-        JPanel volumePanel = new JPanel(new BorderLayout(5, 5));
-        volumePanel.setOpaque(false);
-        JLabel volumeLabel = new JLabel("🔊");
-        JSlider volumeSlider = new JSlider(0, 100, 70);
-        volumePanel.add(volumeLabel, BorderLayout.WEST);
-        volumePanel.add(volumeSlider, BorderLayout.CENTER);
-        card.add(volumePanel);
+                    buff.close();
 
-        bgPanel.add(card);
-        add(bgPanel);
+                } catch (IOException e1) {
+
+                    System.out.println("Tidak dapat menutup stream: " +
+
+                            e1.getMessage());
+
+                }
+
+            }
+
+        }
+
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MediaStreamerUI().setVisible(true));
-    }
 }
+
+b)
+
+Mendownload File
+dari suatu
+web tertentu
+.
+
+import java.io.*;
+
+import java.net.*;
+
+public class DownloadFile {
+
+  public static void main (String args []){  
+
+    InputStream in=null;  
+
+    FileOutputStream fOut=null;  
+
+    try { 
+
+    URL remoteFile = new URL 
+
+("http://dl.vafamusic.com/Full%20Album/bts/320/BTS-Boy-With
+
+Luv%20%28VafaMusic%29.mp3"); 
+
+     URLConnection fileStream = remoteFile.openConnection();  
+
+     //membuka input dan output stream  
+
+     fOut = new FileOutputStream("BTS1.mp3");  
+
+     in = fileStream.getInputStream();  
+
+      
+
+     //menyimpan file  
+
+     int data;  
+
+    while ((data=in.read())!=-1){  
+
+      fOut.write(data);  
+
+      }  
+
+    }  
+
+   catch (Exception ex){  
+
+     ex.printStackTrace();  
+
+    }  
+
+    finally {  
+
+     System.out.println("File telah berhasil didownload");  
+
+    try {  
+
+      in.close();   
+
+fOut.flush();  
+
+fOut.close(); 
+
+}  
+
+catch (Exception e){  
+
+e.printStackTrace();  
+
+} 
+
+}  
+
+}
+
+} 
