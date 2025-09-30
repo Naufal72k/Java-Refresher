@@ -1,6 +1,5 @@
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -30,7 +29,8 @@ public class Main extends JFrame {
 
         JPanel panel1 = new JPanel();
         panel1.setBackground(warnaPutih);
-        panel1.setLayout(new BorderLayout(20, 20));
+
+        panel1.setLayout(new BorderLayout(0, 10));
         panel1.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JPanel panelAtas = new JPanel();
@@ -43,8 +43,9 @@ public class Main extends JFrame {
         kolomURL.setForeground(warnaTeks);
         kolomURL.setCaretColor(warnaTeks);
         kolomURL.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(warnaGelap, 1, true),
+                BorderFactory.createLineBorder(warnaGelap, 2, true),
                 BorderFactory.createEmptyBorder(8, 15, 8, 15)));
+
         kolomURL.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
         tombolSearch = new JButton();
@@ -63,11 +64,10 @@ public class Main extends JFrame {
         labelGambar = new JLabel("~ Tempat Gambar Muncul ~", SwingConstants.CENTER);
         labelGambar.setForeground(warnaTeks);
         labelGambar.setFont(new Font("Segoe UI", Font.ITALIC, 14));
-        labelGambar.setOpaque(true);
         labelGambar.setBackground(warnaPutih);
         labelGambar.setPreferredSize(new Dimension(1000, 600));
         labelGambar.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(warnaGelap, 1, true),
+                BorderFactory.createLineBorder(warnaGelap, 2, true),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
         panel1.add(labelGambar, BorderLayout.CENTER);
@@ -110,7 +110,6 @@ public class Main extends JFrame {
                     if (muatGambar != null) {
                         labelGambar.setIcon(new ImageIcon(muatGambar));
                         labelGambar.setText("");
-                        labelGambar.revalidate();
                         tombolSimpan.setEnabled(true);
                     } else {
                         JOptionPane.showMessageDialog(null,
