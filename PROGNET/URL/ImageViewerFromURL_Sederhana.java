@@ -11,179 +11,130 @@ import javax.imageio.ImageIO;
 
 public class ImageViewerFromURL_Sederhana extends JFrame {
 
-    private JTextField urlField;
-    private JButton loadButton;
-    private JButton saveButton;
-    private JLabel imageLabel;
-    private BufferedImage loadedImage;
+    private JTextField kolomURL;
+    private JButton tombolSearch;
+    private JButton tombolSimpan;
+    private JLabel labelGambar;
+    private BufferedImage muatGambar;
 
     public ImageViewerFromURL_Sederhana() {
         setTitle("🔎 Image Viewer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        // 🎨 Palet warna lebih cerah
-        Color bgLight = new Color(245, 247, 250);
-        Color bgCard = new Color(255, 255, 255);
-        Color bgInput = new Color(250, 250, 250);
-        Color borderGray = new Color(200, 200, 200);
-        Color textDark = new Color(50, 50, 55);
+        Color warnaAbu = new Color(245, 247, 250);
+        Color warnaGelap = new Color(33, 33, 33);
+        Color warnaPutih = new Color(255, 255, 255);
+        Color warnaTeks = new Color(50, 50, 55);
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setBackground(bgCard);
-        mainPanel.setLayout(new BorderLayout(20, 20));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(warnaPutih);
+        panel1.setLayout(new BorderLayout(20, 20));
+        panel1.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel title = new JLabel("🔎 Image Viewer", SwingConstants.CENTER);
-        title.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        title.setForeground(new Color(37, 99, 235)); // biru cerah
+        JPanel panelAtas = new JPanel();
+        panelAtas.setBackground(warnaPutih);
+        panelAtas.setLayout(new BorderLayout(10, 0));
 
-        JLabel subtitle = new JLabel("Paste URL gambar untuk melihat preview", SwingConstants.CENTER);
-        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        subtitle.setForeground(textDark);
-
-        JPanel headerPanel = new JPanel(new GridLayout(2, 1, 0, 5));
-        headerPanel.setBackground(bgCard);
-        headerPanel.add(title);
-        headerPanel.add(subtitle);
-
-        mainPanel.add(headerPanel, BorderLayout.NORTH);
-
-        JPanel topPanel = new JPanel(new BorderLayout(10, 0));
-        topPanel.setBackground(bgCard);
-
-        urlField = new JTextField(40);
-        urlField.setText("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png");
-        urlField.setBackground(bgInput);
-        urlField.setForeground(textDark);
-        urlField.setCaretColor(textDark);
-        urlField.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(borderGray, 1, true),
+        kolomURL = new JTextField(40);
+        kolomURL.setText("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png");
+        kolomURL.setBackground(warnaPutih);
+        kolomURL.setForeground(warnaTeks);
+        kolomURL.setCaretColor(warnaTeks);
+        kolomURL.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(warnaGelap, 1, true),
                 BorderFactory.createEmptyBorder(8, 15, 8, 15)));
-        urlField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        kolomURL.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
-        loadButton = new JButton("Load") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                GradientPaint gp = new GradientPaint(0, 0, new Color(59, 130, 246), getWidth(), getHeight(),
-                        new Color(96, 165, 250));
-                g2.setPaint(gp);
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 50, 50);
-                super.paintComponent(g2);
-                g2.dispose();
-            }
-        };
-        loadButton.setContentAreaFilled(false);
-        loadButton.setOpaque(false);
-        loadButton.setForeground(Color.WHITE);
-        loadButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        loadButton.setFocusPainted(false);
-        loadButton.setBorder(BorderFactory.createEmptyBorder(8, 25, 8, 25));
+        tombolSearch = new JButton();
+        tombolSearch.setText("Search");
+        tombolSearch.setBackground(new Color(59, 130, 246));
+        tombolSearch.setForeground(Color.WHITE);
+        tombolSearch.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tombolSearch.setFocusPainted(false);
+        tombolSearch.setBorder(BorderFactory.createEmptyBorder(8, 25, 8, 25));
 
-        topPanel.add(urlField, BorderLayout.CENTER);
-        topPanel.add(loadButton, BorderLayout.EAST);
+        panelAtas.add(kolomURL, BorderLayout.CENTER);
+        panelAtas.add(tombolSearch, BorderLayout.EAST);
 
-        mainPanel.add(topPanel, BorderLayout.BEFORE_FIRST_LINE);
+        panel1.add(panelAtas, BorderLayout.NORTH);
 
-        // ======================
-        // Area Preview Gambar
-        // ======================
-        imageLabel = new JLabel("[ Preview gambar ]", SwingConstants.CENTER);
-        imageLabel.setForeground(textDark);
-        imageLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
-        imageLabel.setOpaque(true);
-        imageLabel.setBackground(bgInput);
-        imageLabel.setPreferredSize(new Dimension(1000, 600));
-        imageLabel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(borderGray, 2, true),
+        labelGambar = new JLabel("~ Tempat Gambar Muncul ~", SwingConstants.CENTER);
+        labelGambar.setForeground(warnaTeks);
+        labelGambar.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        labelGambar.setOpaque(true);
+        labelGambar.setBackground(warnaPutih);
+        labelGambar.setPreferredSize(new Dimension(1000, 600));
+        labelGambar.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(warnaGelap, 1, true),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-        JScrollPane scrollPane = new JScrollPane(imageLabel);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.getViewport().setBackground(bgInput);
+        panel1.add(labelGambar, BorderLayout.CENTER);
 
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        JPanel panelBawah = new JPanel();
+        panelBawah.setBackground(warnaPutih);
+        panelBawah.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        bottomPanel.setBackground(bgCard);
+        tombolSimpan = new JButton();
+        tombolSimpan.setText("💾 Simpan Gambar");
+        tombolSimpan.setBackground(new Color(16, 185, 129));
+        tombolSimpan.setForeground(Color.WHITE);
+        tombolSimpan.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tombolSimpan.setFocusPainted(false);
+        tombolSimpan.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
+        tombolSimpan.setEnabled(false);
 
-        saveButton = new JButton("💾 Save Image") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                GradientPaint gp = new GradientPaint(0, 0, new Color(16, 185, 129), getWidth(), getHeight(),
-                        new Color(5, 150, 105));
-                g2.setPaint(gp);
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 50, 50);
-                super.paintComponent(g2);
-                g2.dispose();
-            }
-        };
-        saveButton.setContentAreaFilled(false);
-        saveButton.setOpaque(false);
-        saveButton.setForeground(Color.WHITE);
-        saveButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        saveButton.setFocusPainted(false);
-        saveButton.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
-        saveButton.setEnabled(false);
+        panelBawah.add(tombolSimpan);
+        panel1.add(panelBawah, BorderLayout.SOUTH);
 
-        bottomPanel.add(saveButton);
-        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+        JPanel container = new JPanel();
+        container.setBackground(warnaAbu);
+        container.setLayout(new GridBagLayout());
+        container.add(panel1);
 
-        JPanel wrapper = new JPanel(new GridBagLayout());
-        wrapper.setBackground(bgLight); // latar belakang terang
-        wrapper.add(mainPanel);
+        setContentPane(container);
 
-        setContentPane(wrapper);
-
-        // ======================
-        // Logic tombol Load
-        // ======================
-        loadButton.addActionListener(new ActionListener() {
+        tombolSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String imageUrl = urlField.getText();
-                    URL url = new URL(imageUrl);
-                    URLConnection conn = url.openConnection();
-                    conn.setRequestProperty("User-Agent", "Mozilla/5.0");
-                    InputStream in = conn.getInputStream();
+                    String alamatGambar = kolomURL.getText();
+                    URL url = new URL(alamatGambar);
+                    URLConnection koneksi = url.openConnection();
+                    koneksi.setRequestProperty("User-Agent", "Mozilla/5.0");
+                    InputStream dataGambar = koneksi.getInputStream();
 
-                    loadedImage = ImageIO.read(in);
-                    in.close();
+                    muatGambar = ImageIO.read(dataGambar);
+                    dataGambar.close();
 
-                    if (loadedImage != null) {
-                        imageLabel.setIcon(new ImageIcon(loadedImage));
-                        imageLabel.setText("");
-                        imageLabel.revalidate();
-                        saveButton.setEnabled(true);
+                    if (muatGambar != null) {
+                        labelGambar.setIcon(new ImageIcon(muatGambar));
+                        labelGambar.setText("");
+                        labelGambar.revalidate();
+                        tombolSimpan.setEnabled(true);
                     } else {
                         JOptionPane.showMessageDialog(null,
-                                "Format gambar tidak didukung.\nGunakan JPG atau PNG.");
+                                "Format gambar tidak didukung.\nCoba pakai JPG atau PNG.");
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(null, "Ada masalah: " + ex.getMessage());
                 }
             }
         });
 
-        // ======================
-        // Logic tombol Save
-        // ======================
-        saveButton.addActionListener(new ActionListener() {
+        tombolSimpan.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (loadedImage != null) {
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setDialogTitle("Simpan gambar");
-                    int userSelection = fileChooser.showSaveDialog(null);
+                if (muatGambar != null) {
+                    JFileChooser pilihFile = new JFileChooser();
+                    pilihFile.setDialogTitle("Simpan Gambar");
+                    int pilihanUser = pilihFile.showSaveDialog(null);
 
-                    if (userSelection == JFileChooser.APPROVE_OPTION) {
-                        File fileToSave = fileChooser.getSelectedFile();
+                    if (pilihanUser == JFileChooser.APPROVE_OPTION) {
+                        File fileSimpan = pilihFile.getSelectedFile();
                         try {
-                            ImageIO.write(loadedImage, "png", fileToSave);
+                            ImageIO.write(muatGambar, "png", fileSimpan);
                             JOptionPane.showMessageDialog(null, "Gambar berhasil disimpan!");
                         } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, "Error menyimpan gambar: " + ex.getMessage());
+                            JOptionPane.showMessageDialog(null, "Gagal menyimpan gambar: " + ex.getMessage());
                         }
                     }
                 }
