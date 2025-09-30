@@ -1,4 +1,3 @@
-package URL;
 
 import java.io.*;
 import java.net.*;

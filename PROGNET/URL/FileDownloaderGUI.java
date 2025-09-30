@@ -1,4 +1,3 @@
-package URL;
 
 import javax.swing.*;
 import java.awt.*;

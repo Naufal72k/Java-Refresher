@@ -1,6 +1,7 @@
-package URL;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -9,7 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import javax.imageio.ImageIO;
 
-public class ImageViewerFromURL_Sederhana extends JFrame {
+public class Main extends JFrame {
 
     private JTextField kolomURL;
     private JButton tombolSearch;
@@ -17,7 +18,7 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
     private JLabel labelGambar;
     private BufferedImage muatGambar;
 
-    public ImageViewerFromURL_Sederhana() {
+    public Main() {
         setTitle("🔎 Image Viewer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -144,7 +145,7 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new ImageViewerFromURL_Sederhana().setVisible(true);
+            new Main().setVisible(true);
         });
     }
 }
