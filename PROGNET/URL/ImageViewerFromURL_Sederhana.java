@@ -20,13 +20,14 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
     public ImageViewerFromURL_Sederhana() {
         setTitle("🔎 Image Viewer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // langsung fullscreen
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
 
-        Color bgDark = new Color(24, 24, 27);
-        Color bgCard = new Color(39, 39, 42);
-        Color bgInput = new Color(18, 18, 20);
-        Color borderGray = new Color(64, 64, 70);
-        Color textGray = new Color(180, 180, 185);
+        // 🎨 Palet warna lebih cerah
+        Color bgLight = new Color(245, 247, 250);
+        Color bgCard = new Color(255, 255, 255);
+        Color bgInput = new Color(250, 250, 250);
+        Color borderGray = new Color(200, 200, 200);
+        Color textDark = new Color(50, 50, 55);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(bgCard);
@@ -35,11 +36,11 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
 
         JLabel title = new JLabel("🔎 Image Viewer", SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        title.setForeground(Color.WHITE);
+        title.setForeground(new Color(37, 99, 235)); // biru cerah
 
         JLabel subtitle = new JLabel("Paste URL gambar untuk melihat preview", SwingConstants.CENTER);
         subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        subtitle.setForeground(textGray);
+        subtitle.setForeground(textDark);
 
         JPanel headerPanel = new JPanel(new GridLayout(2, 1, 0, 5));
         headerPanel.setBackground(bgCard);
@@ -54,8 +55,8 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
         urlField = new JTextField(40);
         urlField.setText("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png");
         urlField.setBackground(bgInput);
-        urlField.setForeground(Color.WHITE);
-        urlField.setCaretColor(Color.WHITE);
+        urlField.setForeground(textDark);
+        urlField.setCaretColor(textDark);
         urlField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(borderGray, 1, true),
                 BorderFactory.createEmptyBorder(8, 15, 8, 15)));
@@ -65,8 +66,8 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
-                GradientPaint gp = new GradientPaint(0, 0, new Color(79, 70, 229), getWidth(), getHeight(),
-                        new Color(99, 102, 241));
+                GradientPaint gp = new GradientPaint(0, 0, new Color(59, 130, 246), getWidth(), getHeight(),
+                        new Color(96, 165, 250));
                 g2.setPaint(gp);
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 50, 50);
                 super.paintComponent(g2);
@@ -86,14 +87,14 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
         mainPanel.add(topPanel, BorderLayout.BEFORE_FIRST_LINE);
 
         // ======================
-        // Area Preview Luas
+        // Area Preview Gambar
         // ======================
         imageLabel = new JLabel("[ Preview gambar ]", SwingConstants.CENTER);
-        imageLabel.setForeground(textGray);
+        imageLabel.setForeground(textDark);
         imageLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
         imageLabel.setOpaque(true);
         imageLabel.setBackground(bgInput);
-        imageLabel.setPreferredSize(new Dimension(1000, 600)); // default besar
+        imageLabel.setPreferredSize(new Dimension(1000, 600));
         imageLabel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(borderGray, 2, true),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -111,8 +112,8 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
-                GradientPaint gp = new GradientPaint(0, 0, new Color(34, 197, 94), getWidth(), getHeight(),
-                        new Color(22, 163, 74));
+                GradientPaint gp = new GradientPaint(0, 0, new Color(16, 185, 129), getWidth(), getHeight(),
+                        new Color(5, 150, 105));
                 g2.setPaint(gp);
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 50, 50);
                 super.paintComponent(g2);
@@ -131,11 +132,14 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
         JPanel wrapper = new JPanel(new GridBagLayout());
-        wrapper.setBackground(bgDark);
+        wrapper.setBackground(bgLight); // latar belakang terang
         wrapper.add(mainPanel);
 
         setContentPane(wrapper);
 
+        // ======================
+        // Logic tombol Load
+        // ======================
         loadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -149,10 +153,9 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
                     in.close();
 
                     if (loadedImage != null) {
-                        // tampilkan gambar ukuran asli
                         imageLabel.setIcon(new ImageIcon(loadedImage));
                         imageLabel.setText("");
-                        imageLabel.revalidate(); // update layout
+                        imageLabel.revalidate();
                         saveButton.setEnabled(true);
                     } else {
                         JOptionPane.showMessageDialog(null,
@@ -164,6 +167,9 @@ public class ImageViewerFromURL_Sederhana extends JFrame {
             }
         });
 
+        // ======================
+        // Logic tombol Save
+        // ======================
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (loadedImage != null) {
