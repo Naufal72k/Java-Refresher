@@ -1,6 +1,5 @@
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -11,11 +10,11 @@ import javax.imageio.ImageIO;
 
 public class Main extends JFrame {
 
-    private JTextField kolomURL;
-    private JButton tombolSearch;
-    private JButton tombolSimpan;
-    private JLabel labelGambar;
-    private BufferedImage muatGambar;
+    JTextField kolomURL;
+    JButton tombolSearch;
+    JButton tombolSimpan;
+    JLabel labelGambar;
+    BufferedImage muatGambar;
 
     public Main() {
         setTitle("🔎 Image Viewer");
@@ -29,7 +28,6 @@ public class Main extends JFrame {
 
         JPanel panel1 = new JPanel();
         panel1.setBackground(warnaPutih);
-
         panel1.setLayout(new BorderLayout(0, 10));
         panel1.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -37,7 +35,7 @@ public class Main extends JFrame {
         panelAtas.setBackground(warnaPutih);
         panelAtas.setLayout(new BorderLayout(10, 0));
 
-        kolomURL = new JTextField(40);
+        kolomURL = new JTextField();
         kolomURL.setText("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png");
         kolomURL.setBackground(warnaPutih);
         kolomURL.setForeground(warnaTeks);
@@ -131,7 +129,11 @@ public class Main extends JFrame {
                     if (pilihanUser == JFileChooser.APPROVE_OPTION) {
                         File fileSimpan = pilihFile.getSelectedFile();
                         try {
-                            ImageIO.write(muatGambar, "png", fileSimpan);
+
+                            OutputStream out = new FileOutputStream(fileSimpan);
+                            ImageIO.write(muatGambar, "png/jpg", out);
+                            out.close();
+
                             JOptionPane.showMessageDialog(null, "Gambar berhasil disimpan!");
                         } catch (IOException ex) {
                             JOptionPane.showMessageDialog(null, "Gagal menyimpan gambar: " + ex.getMessage());
@@ -140,6 +142,7 @@ public class Main extends JFrame {
                 }
             }
         });
+
     }
 
     public static void main(String[] args) {
