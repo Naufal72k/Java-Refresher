@@ -8,6 +8,9 @@ public class Gaji {
     }
 
     public void hitungSemuaGaji() {
-
+        for (Karyawan karyawan : DaftarKaryawan) {
+            double totalGaji = 
+            
+        }
     }
 }

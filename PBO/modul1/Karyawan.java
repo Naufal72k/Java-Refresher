@@ -18,15 +18,15 @@ public class Karyawan {
     }
 
     public double hitungGaji(int jamKerja) {
-        return jamKerja;
+        return gajiPerJam * jamKerja;
     }
 
     public double hitungLembur(int jlhLembur) {
-        return jlhLembur;
+        return bonusLembur * jlhLembur;
     }
 
     public double hitungAbsen(int jumlahAbsen) {
-        return jumlahAbsen;
+        return potonganAbsen * jumlahAbsen;
     }
 
     public String getNama() {
