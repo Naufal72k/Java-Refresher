@@ -1,3 +1,5 @@
+package Test;
+
 public class Magang extends Karyawan {
 
     public Magang(String nama, int jamKerja, int jlhLembur, int jlhAbsen) {

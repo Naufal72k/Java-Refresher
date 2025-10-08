@@ -1,3 +1,5 @@
+package Test;
+
 public class Main {
     public static void main(String[] args) {
         Karyawan karyawan1 = new KaryawanTetap("Agus", 320, 5, 2);

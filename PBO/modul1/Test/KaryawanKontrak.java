@@ -1,3 +1,5 @@
+package Test;
+
 public class KaryawanKontrak extends Karyawan {
 
     public KaryawanKontrak(String nama, int jamKerja, int jlhLembur, int jlhAbsen) {

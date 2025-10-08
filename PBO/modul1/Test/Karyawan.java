@@ -1,3 +1,5 @@
+package Test;
+
 public class Karyawan {
     private String nama;
     private String status;
