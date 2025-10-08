@@ -22,7 +22,7 @@ public class Gaji {
             System.out.println("Gaji\t\t\t: " + tempGaji);
             System.out.println("Bonus lembur\t\t: " + tempLembur);
             System.out.println("Potongan absen\t\t: " + tempAbsen);
-            System.out.println("Gaji akhir\t\t: " + String.format("%.0f", totalGaji));
+            System.out.println("Gaji akhir\t\t: " + totalGaji);
             System.out.println("==================================================");
             System.out.println();
 
