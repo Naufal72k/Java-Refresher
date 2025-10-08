@@ -45,7 +45,7 @@ public class Karyawan {
         return jlhLembur;
     }
 
-    public int getJlmAbsen() {
+    public int getJlhAbsen() {
         return jlhAbsen;
     }
 
