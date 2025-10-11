@@ -1,3 +1,5 @@
+package pertama;
+
 public class Karyawan {
     private String nama;
     private String id;

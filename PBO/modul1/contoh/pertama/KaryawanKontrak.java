@@ -1,3 +1,5 @@
+package pertama;
+
 public class KaryawanKontrak extends Karyawan {
     private double upahPerJam;
     private int jumlahJamKerja;

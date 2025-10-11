@@ -1,3 +1,5 @@
+package pertama;
+
 public class KaryawanTetap extends Karyawan {
     private double tunjangan;
 

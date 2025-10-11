@@ -1,3 +1,5 @@
+package pertama;
+
 public class Manager extends Karyawan {
     private double tunjangan;
 
