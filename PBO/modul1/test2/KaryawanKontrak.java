@@ -7,11 +7,11 @@ public class KaryawanKontrak extends Karyawan {
     }
 
     public double hitungLembur(int jlhLembur) {
-        return jlhLembur;
+        return super.getBonusLembur() * jlhLembur;
     }
 
     public double hitungAbsen(int jlhAbsen) {
-        return jlhAbsen;
+        return super.getPotonganAbsen() * jlhAbsen;
     }
 
 }

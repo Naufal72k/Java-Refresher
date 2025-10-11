@@ -7,8 +7,8 @@ public class Karyawan {
     private int jamKerja;
     private int jlhLembur;
     private int jlhAbsen;
-    private double bonusLembur;
-    private double potonganAbsen;
+    private double bonusLembur = 45_000;
+    private double potonganAbsen = 150_000;
 
     public Karyawan(String nama, String status, double gajiPerJam, int jamKerja, int jlhLembur, int jlhAbsen) {
         this.nama = nama;
@@ -20,15 +20,15 @@ public class Karyawan {
     }
 
     public double hitungGaji(int jamKerja) {
-        return jamKerja;
+        return gajiPerJam * jamKerja;
     }
 
     public double hitungLembur(int jlhLembur) {
-        return jlhLembur;
+        return bonusLembur * jlhLembur;
     }
 
     public double hitungAbsen(int jlhAbsen) {
-        return jlhAbsen;
+        return potonganAbsen * jlhAbsen;
     }
 
     public String getNama() {
