@@ -14,7 +14,15 @@ public class KaryawanKontrak extends Karyawan {
     }
 
     @Override
-    public void tampilkanDetail() {
+    public void tampilDetail() {
+        System.out.println("======================================================");
+        System.out.println("Nama\t\t : " + super.getNama());
+        System.out.println("ID Karyawan\t : " + super.getId());
+        System.out.println("Status\t\t : Kontrak");
+        System.out.println("Upah per jam\t : " + this.upahPerJam);
+        System.out.println("Jam Kerja\t : " + this.jumlahJamKerja);
+        System.out.println("Total Gaji\t : " + this.hitungGaji());
+        System.out.println("======================================================");
 
     }
 }

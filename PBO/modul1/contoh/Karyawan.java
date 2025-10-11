@@ -21,7 +21,7 @@ public class Karyawan {
         return 1;
     }
 
-    public void tampilDdetail() {
+    public void tampilDetail() {
 
     }
 }

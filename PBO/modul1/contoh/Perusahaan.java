@@ -8,6 +8,8 @@ public class Perusahaan {
     }
 
     public void tampilkanSemuaGaji() {
-
+        for (Karyawan karyawan : daftarKaryawan) {
+            karyawan.tampilDetail();
+        }
     }
 }
