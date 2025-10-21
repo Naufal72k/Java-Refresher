@@ -1,0 +1,8 @@
+public class Main {
+    public static void main(String[] args) {
+        Burung a = new Burung();
+
+        a.bersuara();
+        a.isHewan();
+    }
+}
