@@ -1,3 +1,5 @@
+package praktikum1;
+
 public abstract class Hewan {
     private String nama;
     private int jumlahKaki;

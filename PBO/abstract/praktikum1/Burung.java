@@ -1,3 +1,5 @@
+package praktikum1;
+
 public class Burung extends Hewan {
     public Burung() {
         super("null", 1, false);
