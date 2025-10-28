@@ -8,6 +8,6 @@ public class Main {
         a.makeSound();
         a.swim();
         System.out.println(a.getName());
-        ;
+
     }
 }
