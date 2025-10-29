@@ -7,7 +7,7 @@ import java.awt.event.*;
 public class PaymentPage extends JFrame {
 
     private String packageName;
-    private int packageDuration; // jam
+    private int packageDuration;
     private int packagePrice;
     private int stationNum;
 
@@ -25,11 +25,9 @@ public class PaymentPage extends JFrame {
         getContentPane().setBackground(Color.BLACK);
         setLayout(new BorderLayout());
 
-        // Header Panel (dengan Tombol Back)
         JPanel headerPanel = createHeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
 
-        // Panel Konten
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(Color.BLACK);
         mainPanel.setLayout(new GridBagLayout());
@@ -40,13 +38,11 @@ public class PaymentPage extends JFrame {
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
 
-        // Teks "Proses Pembayaran Anda"
         JLabel titleLabel = new JLabel("Proses Pembayaran Anda");
         titleLabel.setFont(new Font("Roboto", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
         mainPanel.add(titleLabel, gbc);
 
-        // Teks Detail Pesanan
         gbc.gridy = 1;
         String detailText = String.format("Station %d - ✓ %s - %d Jam", stationNum, packageName, packageDuration);
         JLabel detailLabel = new JLabel(detailText);
@@ -54,12 +50,10 @@ public class PaymentPage extends JFrame {
         detailLabel.setForeground(Color.WHITE);
         mainPanel.add(detailLabel, gbc);
 
-        // Gambar QR Code (Sesuai Gambar 4)
         gbc.gridy = 2;
         try {
-            // Ganti path ini jika lokasi QR code berbeda
             ImageIcon qrIcon = new ImageIcon(getClass().getResource("/assets/images/img-qr.png"));
-            // Scaling gambar
+
             Image qrImg = qrIcon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
             JLabel qrLabel = new JLabel(new ImageIcon(qrImg));
             mainPanel.add(qrLabel, gbc);
@@ -70,26 +64,20 @@ public class PaymentPage extends JFrame {
             mainPanel.add(qrPlaceholder, gbc);
         }
 
-        // Tombol "Selesai"
         gbc.gridy = 3;
         JButton selesaiButton = new JButton("Selesai");
         selesaiButton.setFont(new Font("Roboto", Font.BOLD, 16));
-        selesaiButton.setBackground(new Color(60, 90, 250)); // Biru
+        selesaiButton.setBackground(new Color(60, 90, 250));
         selesaiButton.setForeground(Color.WHITE);
         selesaiButton.setFocusPainted(false);
         selesaiButton.setPreferredSize(new Dimension(120, 40));
 
         selesaiButton.addActionListener(e -> {
-            // **AKSI UTAMA SAAT BAYAR SELESAI**
-
-            // 1. Update status station global jadi 'Unavailable'
             long durationInSeconds = packageDuration * 3600L;
             DaftarStation.updateStationStatus(stationNum, false, durationInSeconds);
 
-            // 2. Tutup window ini
             dispose();
 
-            // 3. Buka ConfirmationPage (kirim info paket agar bisa kembali)
             new ConfirmationPage(packageName, packageDuration, packagePrice).setVisible(true);
         });
 
@@ -97,7 +85,6 @@ public class PaymentPage extends JFrame {
         add(mainPanel, BorderLayout.CENTER);
     }
 
-    // Helper untuk membuat header konsisten
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel() {
             private Image backgroundImage;
@@ -106,7 +93,7 @@ public class PaymentPage extends JFrame {
                     ImageIcon icon = new ImageIcon(getClass().getResource("/assets/images/img-header.png"));
                     backgroundImage = icon.getImage();
                 } catch (Exception e) {
-                    setBackground(new Color(135, 206, 250)); // Fallback
+                    setBackground(new Color(135, 206, 250));
                 }
             }
 
@@ -125,7 +112,6 @@ public class PaymentPage extends JFrame {
         };
         headerPanel.setLayout(new BorderLayout());
 
-        // Tombol Back (Sesuai Gambar 4)
         JButton backButton = new JButton("←");
         backButton.setFont(new Font("Roboto", Font.BOLD, 32));
         backButton.setForeground(Color.WHITE);
@@ -135,8 +121,7 @@ public class PaymentPage extends JFrame {
         backButton.setFocusPainted(false);
         backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backButton.addActionListener(e -> {
-            dispose(); // Tutup window ini
-            // Kembali ke DaftarStation (dengan info paket asli)
+            dispose();
             new DaftarStation(packageName, packageDuration, packagePrice).setVisible(true);
         });
 

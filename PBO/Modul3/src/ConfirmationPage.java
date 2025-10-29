@@ -24,11 +24,9 @@ public class ConfirmationPage extends JFrame {
         getContentPane().setBackground(Color.BLACK);
         setLayout(new BorderLayout());
 
-        // Header Panel
         JPanel headerPanel = createHeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
 
-        // Panel Konten
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(Color.BLACK);
         mainPanel.setLayout(new GridBagLayout());
@@ -38,35 +36,27 @@ public class ConfirmationPage extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
-
-        // Teks "Kode Anda"
         JLabel titleLabel = new JLabel("Kode Anda");
         titleLabel.setFont(new Font("Roboto", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
         mainPanel.add(titleLabel, gbc);
 
-        // Kode Acak (Sesuai Gambar 5)
         gbc.gridy = 1;
         JLabel codeLabel = new JLabel(generateRandomCode());
         codeLabel.setFont(new Font("Roboto", Font.BOLD, 48));
         codeLabel.setForeground(Color.WHITE);
         mainPanel.add(codeLabel, gbc);
 
-        // Tombol "Selesai"
         gbc.gridy = 2;
         JButton selesaiButton = new JButton("Selesai");
         selesaiButton.setFont(new Font("Roboto", Font.BOLD, 16));
-        selesaiButton.setBackground(new Color(60, 90, 250)); // Biru
+        selesaiButton.setBackground(new Color(60, 90, 250));
         selesaiButton.setForeground(Color.WHITE);
         selesaiButton.setFocusPainted(false);
         selesaiButton.setPreferredSize(new Dimension(120, 40));
 
         selesaiButton.addActionListener(e -> {
-            // **AKSI UTAMA: KEMBALI KE DAFTAR STATION**
             dispose();
-            // Buka lagi DaftarStation.
-            // Karena status station sudah diupdate (di PaymentPage),
-            // Tampilan akan otomatis menunjukkan station yang baru dibooking jadi merah.
             new DaftarStation(packageName, packageDuration, packagePrice).setVisible(true);
         });
 
@@ -74,7 +64,6 @@ public class ConfirmationPage extends JFrame {
         add(mainPanel, BorderLayout.CENTER);
     }
 
-    // Helper untuk generate kode acak
     private String generateRandomCode() {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder sb = new StringBuilder();
@@ -86,7 +75,6 @@ public class ConfirmationPage extends JFrame {
         return sb.toString();
     }
 
-    // Helper untuk membuat header konsisten (tanpa tombol back)
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel() {
             private Image backgroundImage;
@@ -95,7 +83,7 @@ public class ConfirmationPage extends JFrame {
                     ImageIcon icon = new ImageIcon(getClass().getResource("/assets/images/img-header.png"));
                     backgroundImage = icon.getImage();
                 } catch (Exception e) {
-                    setBackground(new Color(135, 206, 250)); // Fallback
+                    setBackground(new Color(135, 206, 250));
                 }
             }
 

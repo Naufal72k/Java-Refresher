@@ -16,7 +16,7 @@ public class TimerPage extends JFrame {
     public TimerPage(String stationName, long durationInSeconds) {
         this.stationName = stationName;
         this.remainingTime = durationInSeconds;
-        this.stationNum = Integer.parseInt(stationName.replace("Station ", "")); // Parse nomor station
+        this.stationNum = Integer.parseInt(stationName.replace("Station ", ""));
 
         initializeUI();
         startTimer();
@@ -104,9 +104,9 @@ public class TimerPage extends JFrame {
                     timer.cancel();
                     SwingUtilities.invokeLater(() -> {
                         JOptionPane.showMessageDialog(TimerPage.this, "Waktu habis!");
-                        DaftarStation.updateStationStatus(stationNum, true, 0); // Set available
+                        DaftarStation.updateStationStatus(stationNum, true, 0);
                         dispose();
-                        new LandingPage().setVisible(true); // Kembali ke Landing Page
+                        new LandingPage().setVisible(true);
                     });
                 }
             }
@@ -117,9 +117,9 @@ public class TimerPage extends JFrame {
         if (timer != null) {
             timer.cancel();
         }
-        DaftarStation.updateStationStatus(stationNum, true, 0); // Set available saat stop
+        DaftarStation.updateStationStatus(stationNum, true, 0);
         dispose();
-        new LandingPage().setVisible(true); // Kembali ke Landing Page
+        new LandingPage().setVisible(true);
     }
 
     private String formatTime(long seconds) {
@@ -131,7 +131,7 @@ public class TimerPage extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new TimerPage("Station 1", 3600).setVisible(true); // 1 hour example
+            new TimerPage("Station 1", 3600).setVisible(true);
         });
     }
 }

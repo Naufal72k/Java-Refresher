@@ -204,68 +204,60 @@ public class LandingPage extends JFrame {
 
                 // 3. Tambahkan 10 game lainnya (Saya gunakan path placeholder)
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-                gameCardsPanel.add(createGameCard("Gran Turismo 7", "Racing", "/assets/games/gt7.jpg", "2022", "8.5",
+                gameCardsPanel.add(createGameCard("Gran Turismo 7", "Racing", "/assets/games/games9.jpg", "2022", "8.5",
                                 "Polyphony", "Racing sim", "https://..."));
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-                gameCardsPanel.add(createGameCard("FIFA 23", "Sports", "/assets/games/fifa23.jpg", "2022", "7.8",
+                gameCardsPanel.add(createGameCard("FIFA 23", "Sports", "/assets/games/games10.jpg", "2022", "7.8",
                                 "EA Sports", "Soccer", "https://..."));
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-                gameCardsPanel.add(createGameCard("Call of Duty MWII", "Shooter", "/assets/games/codmw2.jpg", "2022",
+                gameCardsPanel.add(createGameCard("Call of Duty MWII", "Shooter", "/assets/games/games11.jpg", "2022",
                                 "8.0",
                                 "Infinity Ward", "Shooter", "https://..."));
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-                gameCardsPanel.add(createGameCard("Horizon Forbidden West", "Action", "/assets/games/hfw.jpg", "2022",
-                                "9.0",
-                                "Guerilla", "Action-RPG", "https://..."));
+                gameCardsPanel.add(
+                                createGameCard("Horizon Forbidden West", "Action", "/assets/games/games12.jpg", "2022",
+                                                "9.0",
+                                                "Guerilla", "Action-RPG", "https://..."));
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-                gameCardsPanel.add(createGameCard("Ratchet & Clank", "Platformer", "/assets/games/ratchet.jpg", "2021",
+                gameCardsPanel.add(createGameCard("Ratchet & Clank", "Platformer", "/assets/games/games13.jpg", "2021",
                                 "8.7",
                                 "Insomniac", "Platformer", "https://..."));
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-                gameCardsPanel.add(createGameCard("RE4 Remake", "Horror", "/assets/games/re4.jpg", "2023", "9.5",
+                gameCardsPanel.add(createGameCard("RE4 Remake", "Horror", "/assets/games/games14.jpg", "2023", "9.5",
                                 "Capcom", "Horror", "https://..."));
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
                 gameCardsPanel.add(
-                                createGameCard("Street Fighter 6", "Fighting", "/assets/games/sf6.jpg", "2023", "8.8",
+                                createGameCard("Street Fighter 6", "Fighting", "/assets/games/games15.jpg", "2023",
+                                                "8.8",
                                                 "Capcom", "Fighting", "https://..."));
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-                gameCardsPanel.add(createGameCard("Mortal Kombat 1", "Fighting", "/assets/games/mk1.jpg", "2023", "8.2",
+                gameCardsPanel.add(createGameCard("Mortal Kombat 1", "Fighting", "/assets/games/games16.jpg", "2023",
+                                "8.2",
                                 "NetherRealm", "Fighting", "https://..."));
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-                gameCardsPanel.add(createGameCard("Jedi: Survivor", "Action", "/assets/games/jedi_survivor.jpg", "2023",
+                gameCardsPanel.add(createGameCard("Jedi: Survivor", "Action", "/assets/games/games17.jpg", "2023",
                                 "8.9",
                                 "Respawn", "Action", "https://..."));
                 gameCardsPanel.add(Box.createRigidArea(new Dimension(15, 0)));
                 gameCardsPanel.add(createGameCard("Diablo IV", "RPG", "/assets/games/diablo4.jpg", "2023", "8.3",
                                 "Blizzard", "RPG", "https://..."));
 
-                // 4. Buat JScrollPane HORIZONTAL untuk membungkus panel game
                 JScrollPane gameScrollPane = new JScrollPane(gameCardsPanel);
                 gameScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
                 gameScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 gameScrollPane.setBorder(null);
                 gameScrollPane.setBackground(Color.BLACK);
-                gameScrollPane.getViewport().setBackground(Color.BLACK); // Pastikan viewport juga hitam
-
-                // 5. Atur tinggi scroll pane agar pas (kartu 220px + padding 10px)
+                gameScrollPane.getViewport().setBackground(Color.BLACK);
                 int cardHeight = 230;
                 gameScrollPane.setPreferredSize(new Dimension(0, cardHeight));
                 gameScrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, cardHeight));
                 gameScrollPane.setMinimumSize(new Dimension(0, cardHeight));
                 gameScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                // 6. Tambahkan gameScrollPane (bukan gameCardsPanel) ke contentPanel
                 contentPanel.add(gameScrollPane);
 
-                // --- PERUBAHAN SELESAI ---
-
-                // =================================================================
-                // 3. SCROLLPANE WRAPPER (Perbaikan 1: Centering Content)
-                // =================================================================
-
                 JPanel outerPanel = new JPanel(new GridBagLayout());
-                outerPanel.setBackground(Color.BLACK); // Background hitam untuk margin
-
+                outerPanel.setBackground(Color.BLACK);
                 GridBagConstraints gbc = new GridBagConstraints();
                 gbc.gridx = 0;
                 gbc.gridy = 0;
@@ -293,7 +285,6 @@ public class LandingPage extends JFrame {
                 add(scrollPane, BorderLayout.CENTER);
         }
 
-        // --- createPaketCard (Tidak berubah) ---
         private JPanel createPaketCard(String name, int duration, int price, String description, Font titleFont,
                         Font descFont) {
 
@@ -348,7 +339,6 @@ public class LandingPage extends JFrame {
                 return card;
         }
 
-        // --- createGameCard (Tidak berubah) ---
         private JPanel createGameCard(String name, String genre, String imgPath, String year, String rating,
                         String director, String description, String imdbUrl) {
 
