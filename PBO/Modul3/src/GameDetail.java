@@ -1,13 +1,14 @@
 package src;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URI;
 import java.awt.Desktop;
 
 public class GameDetail extends JFrame {
-    private JPanel mainPanel;
+    // Deklarasi field tetap sama
     private String gameTitle;
     private String genre;
     private String year;
@@ -17,7 +18,7 @@ public class GameDetail extends JFrame {
     private String posterPath;
     private String imdbUrl;
 
-    // Constructor dengan data game
+    // Constructor (sama)
     public GameDetail(String gameTitle, String genre, String year, String rating, String director, String description,
             String posterPath, String imdbUrl) {
         this.gameTitle = gameTitle;
@@ -28,103 +29,83 @@ public class GameDetail extends JFrame {
         this.description = description;
         this.posterPath = posterPath;
         this.imdbUrl = imdbUrl;
-        initializeUI();
-        setFullscreen();
+
+        // Panggil UI baru
+        initializeNewUI();
     }
 
-    private void initializeUI() {
+    // *** UI LAMA DIHAPUS DAN DIGANTI DENGAN INI ***
+    private void initializeNewUI() {
         setTitle("Game Detail - " + gameTitle);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Hanya tutup window ini
 
-        JPanel headerPanel = new JPanel() {
-            private Image backgroundImage;
+        // 1. Konfigurasi Pop-up (bukan fullscreen)
+        setUndecorated(true); // Menghilangkan title bar OS
+        setSize(900, 550); // Ukuran pop-up yang pas
+        setLocationRelativeTo(null); // Muncul di tengah layar
 
-            {
-                try {
-                    ImageIcon icon = new ImageIcon(getClass().getResource("/assets/images/img-header.png"));
-                    backgroundImage = icon.getImage();
-                } catch (Exception e) {
-                    System.out.println("Header image not found");
-                }
-            }
+        // 2. Container Utama
+        JPanel mainContainer = new JPanel(new BorderLayout());
+        mainContainer.setBackground(Color.BLACK);
+        // Border abu-abu tipis agar terlihat seperti window
+        mainContainer.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (backgroundImage != null) {
-                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-                }
-            }
+        // 3. Custom Title Bar (Sesuai Gambar: [Judul] [X])
+        JPanel titleBarPanel = new JPanel(new BorderLayout());
+        titleBarPanel.setBackground(new Color(20, 20, 20)); // Abu-abu sangat gelap
+        titleBarPanel.setBorder(new EmptyBorder(5, 10, 5, 5));
 
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(0, 100);
-            }
-        };
-        headerPanel.setLayout(new BorderLayout());
+        JLabel titleLabel = new JLabel(gameTitle);
+        titleLabel.setFont(new Font("Roboto", Font.BOLD, 14));
+        titleLabel.setForeground(Color.WHITE);
+        titleBarPanel.add(titleLabel, BorderLayout.CENTER);
 
-        JLabel headerLabel = new JLabel("RENTAL PS RIJAL", SwingConstants.CENTER);
-        headerLabel.setFont(new Font("Roboto", Font.BOLD, 32));
-        headerLabel.setForeground(Color.WHITE);
-        headerPanel.add(headerLabel, BorderLayout.CENTER);
+        JButton closeButton = new JButton("X");
+        closeButton.setFont(new Font("Roboto", Font.BOLD, 14));
+        closeButton.setForeground(Color.WHITE);
+        closeButton.setOpaque(false);
+        closeButton.setContentAreaFilled(false);
+        closeButton.setBorderPainted(false);
+        closeButton.setFocusPainted(false);
+        closeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // Aksi untuk tombol "X" -> tutup window
+        closeButton.addActionListener(e -> dispose());
+        titleBarPanel.add(closeButton, BorderLayout.EAST);
 
-        add(headerPanel, BorderLayout.NORTH);
+        mainContainer.add(titleBarPanel, BorderLayout.NORTH); // Tambahkan title bar ke atas
 
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        // 4. Panel Konten Utama (Layout Kiri & Kanan)
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setBackground(Color.BLACK);
+        contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20)); // Padding
+
+        // 5. Panel Kiri (Poster + Tombol IMDb)
+        JPanel leftPanel = new JPanel(new BorderLayout(0, 15)); // Gap vertikal 15px
+        leftPanel.setOpaque(false); // Transparan (ikut background hitam)
 
         // Poster
-        ImageIcon posterIcon = new ImageIcon(getClass().getResource(posterPath));
-        if (posterIcon.getImageLoadStatus() != MediaTracker.COMPLETE) {
-            posterIcon = new ImageIcon(); // Fallback if not found
+        JLabel posterLabel = new JLabel();
+        try {
+            ImageIcon posterIcon = new ImageIcon(getClass().getResource(posterPath));
+            // Scaling gambar poster
+            Image posterImg = posterIcon.getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH);
+            posterLabel.setIcon(new ImageIcon(posterImg));
+        } catch (Exception e) {
+            posterLabel.setText("Poster not found");
+            posterLabel.setForeground(Color.WHITE);
         }
-        JLabel posterLabel = new JLabel(posterIcon);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridheight = 6;
-        mainPanel.add(posterLabel, gbc);
+        leftPanel.add(posterLabel, BorderLayout.CENTER);
 
-        // Judul
-        JLabel titleLabel = new JLabel("Judul: " + gameTitle);
-        gbc.gridheight = 1;
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        mainPanel.add(titleLabel, gbc);
+        // Tombol IMDb (Biru)
+        JButton imdbButton = new JButton("View on IMDb"); // Teks sesuai gambar
+        imdbButton.setFont(new Font("Roboto", Font.BOLD, 14));
+        imdbButton.setBackground(new Color(60, 90, 250)); // Warna biru
+        imdbButton.setForeground(Color.WHITE);
+        imdbButton.setFocusPainted(false);
+        imdbButton.setBorder(new EmptyBorder(10, 0, 10, 0)); // Padding atas-bawah
+        imdbButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Genre
-        JLabel genreLabel = new JLabel("Genre: " + genre);
-        gbc.gridy = 1;
-        mainPanel.add(genreLabel, gbc);
-
-        // Tahun
-        JLabel yearLabel = new JLabel("Tahun: " + year);
-        gbc.gridy = 2;
-        mainPanel.add(yearLabel, gbc);
-
-        // Rating
-        JLabel ratingLabel = new JLabel("Rating: " + rating);
-        gbc.gridy = 3;
-        mainPanel.add(ratingLabel, gbc);
-
-        // Direktur
-        JLabel directorLabel = new JLabel("Direktur: " + director);
-        gbc.gridy = 4;
-        mainPanel.add(directorLabel, gbc);
-
-        // Deskripsi
-        JTextArea descArea = new JTextArea(description);
-        descArea.setEditable(false);
-        descArea.setWrapStyleWord(true);
-        descArea.setLineWrap(true);
-        JScrollPane descScroll = new JScrollPane(descArea);
-        descScroll.setPreferredSize(new Dimension(300, 100));
-        gbc.gridy = 5;
-        mainPanel.add(descScroll, gbc);
-
-        // IMDB Button
-        JButton imdbButton = new JButton("Buka IMDB");
+        // **FUNGSI LINK KE IMDB (Sudah ada di kode lama Anda)**
         imdbButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -135,24 +116,100 @@ public class GameDetail extends JFrame {
                 }
             }
         });
-        gbc.gridy = 6;
-        mainPanel.add(imdbButton, gbc);
+        leftPanel.add(imdbButton, BorderLayout.SOUTH); // Tambah tombol ke bawah
 
-        add(mainPanel, BorderLayout.CENTER);
+        contentPanel.add(leftPanel, BorderLayout.WEST); // Tambah panel kiri ke konten
 
-        pack();
+        // 6. Panel Kanan (Semua Teks Info)
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        rightPanel.setOpaque(false); // Transparan
+        rightPanel.setBorder(new EmptyBorder(0, 25, 0, 0)); // Padding kiri (jarak dari poster)
+
+        // Definisikan Font
+        Font labelFont = new Font("Roboto", Font.BOLD, 16);
+        Font valueFont = new Font("Roboto", Font.PLAIN, 16);
+        Font titleFont = new Font("Roboto", Font.BOLD, 28);
+
+        // Judul Game (Besar)
+        JLabel gameTitleLabel = new JLabel(gameTitle);
+        gameTitleLabel.setFont(titleFont);
+        gameTitleLabel.setForeground(Color.WHITE);
+        gameTitleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        rightPanel.add(gameTitleLabel);
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Jarak
+
+        // Baris Info (Genre, Year, Rating, Director)
+        rightPanel.add(createInfoRow("Genre:", genre, labelFont, valueFont));
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        rightPanel.add(createInfoRow("Year:", year, labelFont, valueFont));
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        rightPanel.add(createInfoRow("Rating:", rating, labelFont, valueFont));
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        rightPanel.add(createInfoRow("Director:", director, labelFont, valueFont));
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        // Deskripsi
+        JLabel descLabel = new JLabel("Description:");
+        descLabel.setFont(labelFont);
+        descLabel.setForeground(Color.WHITE);
+        descLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        rightPanel.add(descLabel);
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+
+        JTextArea descArea = new JTextArea(description);
+        descArea.setFont(valueFont);
+        descArea.setForeground(Color.LIGHT_GRAY); // Warna abu-abu
+        descArea.setBackground(Color.BLACK); // Background hitam
+        descArea.setEditable(false);
+        descArea.setWrapStyleWord(true);
+        descArea.setLineWrap(true);
+        descArea.setAlignmentX(Component.LEFT_ALIGNMENT);
+        descArea.setMaximumSize(new Dimension(450, 200)); // Batasi ukuran area teks
+
+        rightPanel.add(descArea);
+
+        // "Lem" vertikal untuk mendorong semua konten ke atas
+        rightPanel.add(Box.createVerticalGlue());
+
+        contentPanel.add(rightPanel, BorderLayout.CENTER); // Tambah panel kanan ke konten
+
+        // 7. Finalisasi
+        mainContainer.add(contentPanel, BorderLayout.CENTER);
+        setContentPane(mainContainer); // Set container utama sebagai isi frame
     }
 
-    private void setFullscreen() {
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setUndecorated(true);
+    // Helper method untuk membuat baris info (Label: Value)
+    private JPanel createInfoRow(String label, String value, Font labelFont, Font valueFont) {
+        JPanel rowPanel = new JPanel();
+        rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
+        rowPanel.setOpaque(false); // Transparan
+        rowPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel lbl = new JLabel(label);
+        lbl.setFont(labelFont);
+        lbl.setForeground(Color.WHITE);
+
+        JLabel val = new JLabel(value);
+        val.setFont(valueFont);
+        val.setForeground(Color.LIGHT_GRAY);
+        val.setBorder(new EmptyBorder(0, 10, 0, 0)); // Padding kiri
+
+        rowPanel.add(lbl);
+        rowPanel.add(val);
+        return rowPanel;
     }
 
+    // Hapus method setFullscreen() yang lama
+    // private void setFullscreen() { ... }
+
+    // main() method untuk testing (bisa dihapus jika tidak perlu)
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // Contoh data
-            new GameDetail("Game Title", "Action", "2020", "9.0", "Director Name", "Description here",
-                    "/assets/poster.png", "https://www.imdb.com/title/example").setVisible(true);
+            // Contoh data sesuai gambar
+            new GameDetail("Red Dead Redemption II", "Action", "2018", "9.7", "Rockstar Games",
+                    "Follows outlaw Arthur Morgan and his gang, led by the charismatic Dutch Van der Linde, as they struggle to cope with the loss of their way of life amidst the decline of the Wild West at the turn of the 20th century.",
+                    "/assets/games/rdr2.jpg", "https://www.imdb.com/title/tt6161168/").setVisible(true);
         });
     }
 }

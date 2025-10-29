@@ -58,7 +58,7 @@ public class PaymentPage extends JFrame {
         gbc.gridy = 2;
         try {
             // Ganti path ini jika lokasi QR code berbeda
-            ImageIcon qrIcon = new ImageIcon(getClass().getResource("/assets/images/qris-dummy.png"));
+            ImageIcon qrIcon = new ImageIcon(getClass().getResource("/assets/images/img-qr.png"));
             // Scaling gambar
             Image qrImg = qrIcon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
             JLabel qrLabel = new JLabel(new ImageIcon(qrImg));

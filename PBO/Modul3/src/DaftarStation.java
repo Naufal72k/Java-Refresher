@@ -1,6 +1,7 @@
 package src;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder; // Import yang mungkin kurang
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
@@ -79,6 +80,7 @@ public class DaftarStation extends JFrame {
         }
     }
 
+    // *** INI ADALAH METHOD YANG DIPERBAIKI (setupUI) ***
     private void setupUI() {
         Font titleFont = new Font("Roboto", Font.BOLD, 24);
 
@@ -93,37 +95,51 @@ public class DaftarStation extends JFrame {
         JPanel headerPanel = createHeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
 
+        // --- PERUBAHAN LAYOUT DIMULAI DI SINI ---
+
         // Main Panel (Hitam)
-        JPanel mainPanel = new JPanel();
+        // Gunakan GridBagLayout untuk menengahkan konten
+        JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(Color.BLACK);
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-        JPanel contentPanel = new JPanel();
-        contentPanel.setBackground(Color.BLACK);
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        GridBagConstraints gbc = new GridBagConstraints();
 
+        // Judul "Daftar Station"
         JLabel titleLabel = new JLabel("Daftar Station");
         titleLabel.setFont(titleFont);
         titleLabel.setForeground(Color.WHITE);
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        contentPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        contentPanel.add(titleLabel);
-        contentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        // Atur posisi Judul
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weighty = 0.1; // Beri sedikit bobot ke atas
+        gbc.anchor = GridBagConstraints.PAGE_END; // Tempel di bawah selnya
+        gbc.insets = new Insets(30, 0, 20, 0); // Padding (top, left, bottom, right)
+        mainPanel.add(titleLabel, gbc);
 
         // Panel untuk grid station
         stationsPanel = new JPanel();
         stationsPanel.setBackground(Color.BLACK);
-        // Padding agar tidak terlalu mepet ke tepi
-        stationsPanel.setBorder(BorderFactory.createEmptyBorder(20, 100, 20, 100));
+        // Padding tidak perlu besar, GBC akan menengahkan
+        stationsPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         stationsPanel.setLayout(new GridLayout(3, 4, 30, 30)); // Grid 3x4 dengan gap
 
         // Buat dan tampilkan card station
         refreshStationCards();
 
-        contentPanel.add(stationsPanel);
-        mainPanel.add(contentPanel);
+        // Atur posisi Grid Station
+        gbc.gridy = 1; // Baris kedua
+        gbc.weighty = 0.9; // Beri sisa ruang ke bawah
+        gbc.anchor = GridBagConstraints.PAGE_START; // Tempel di atas selnya
+        gbc.insets = new Insets(0, 0, 0, 0); // Reset insets
 
+        // Tambahkan stationsPanel ke mainPanel
+        mainPanel.add(stationsPanel, gbc);
+
+        // Tambahkan mainPanel (yang sudah berisi title dan grid) ke JFrame
         add(mainPanel, BorderLayout.CENTER);
+
+        // --- PERUBAHAN LAYOUT SELESAI ---
     }
 
     // Method untuk (re)create semua card station
@@ -138,32 +154,39 @@ public class DaftarStation extends JFrame {
         stationsPanel.repaint(); // Gambar ulang
     }
 
+    // *** INI ADALAH METHOD YANG DIPERBAIKI (createStationCard) ***
     private JPanel createStationCard(int stationNum, Font stationFont, Font statusFont) {
         StationInfo info = globalStationStatus.get(stationNum);
 
         JPanel card = new JPanel();
-        card.setLayout(new BorderLayout(10, 10)); // Gap antar komponen
-        card.setPreferredSize(new Dimension(200, 150)); // Ukuran card
+        card.setLayout(new BorderLayout(5, 5)); // Gap antar komponen (dikecilkan)
+
+        // PERBAIKAN: Kecilkan ukuran card agar sesuai gambar
+        card.setPreferredSize(new Dimension(160, 120));
         card.setBackground(info.available ? new Color(50, 205, 50) : new Color(255, 69, 69)); // Hijau/Merah
         card.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         card.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         JLabel numLabel = new JLabel(String.valueOf(stationNum), SwingConstants.CENTER);
-        numLabel.setFont(stationFont.deriveFont(50f)); // Angka lebih besar
+        // PERBAIKAN: Kecilkan font angka
+        numLabel.setFont(stationFont.deriveFont(40f));
         numLabel.setForeground(Color.WHITE);
 
         JPanel statusPanel = new JPanel();
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
         statusPanel.setOpaque(false); // Transparan
-        statusPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // PERBAIKAN: Kecilkan border
+        statusPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         JLabel statusLabel = new JLabel(info.available ? "Available" : "Unavailable", SwingConstants.CENTER);
-        statusLabel.setFont(statusFont.deriveFont(Font.BOLD, 16f));
+        // PERBAIKAN: Kecilkan font status
+        statusLabel.setFont(statusFont.deriveFont(Font.BOLD, 14f));
         statusLabel.setForeground(Color.WHITE);
         statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel timeLabel = new JLabel(formatTime(info.remainingTime), SwingConstants.CENTER);
-        timeLabel.setFont(statusFont.deriveFont(14f));
+        // PERBAIKAN: Kecilkan font timer
+        timeLabel.setFont(statusFont.deriveFont(12f));
         timeLabel.setForeground(Color.WHITE);
         timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
