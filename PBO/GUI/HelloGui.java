@@ -13,12 +13,14 @@ public class HelloGui {
 
         frame.add(label);
         frame.add(button);
+        JDialog dialog = new JDialog();
+
         button.addActionListener(e -> {
-            JDialog dialog = new JDialog();
             dialog.setTitle("hello");
             dialog.setSize(200, 200);
             dialog.setLocationRelativeTo(frame);
             dialog.setVisible(true);
+            e.getActionCommand();
         });
         frame.setVisible(true);
 
