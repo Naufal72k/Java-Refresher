@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Panel;
 
@@ -15,5 +16,10 @@ public class BelajarPanel {
         frameUtama.setMinimumSize(new Dimension(800, 600));
         frameUtama.setLocationRelativeTo(null);
         frameUtama.setVisible(true);
+
+        JPanel panelUtama = new JPanel();
+        panelUtama.setBackground(Color.BLACK);
+        frameUtama.setContentPane(panelUtama);
+        frameUtama.add(panelUtama);
     }
 }
