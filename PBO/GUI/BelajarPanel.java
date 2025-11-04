@@ -1,7 +1,5 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Label;
-import java.awt.Panel;
 
 import javax.swing.*;
 
@@ -28,7 +26,12 @@ public class BelajarPanel {
         ImageIcon img = new ImageIcon(getClass().getResource("/image.png"));
         JLabel image = new JLabel(img);
 
-        image.setBounds(300, 100, 300, 300);
+        // image.setBounds(300, 100, 300, 300);
+
+        int heightSize = frameUtama.getHeight() / 2;
+        int widhtSize = frameUtama.getWidth() / 2;
+        image.setBounds(heightSize, widhtSize, 100, 100);
+
         panelUtama.add(image);
 
         frameUtama.setContentPane(panelUtama);
