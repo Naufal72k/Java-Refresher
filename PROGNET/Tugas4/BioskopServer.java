@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 
 public class BioskopServer {
 
-    // Shared resource: Daftar kursi
     private static final int TOTAL_SEATS = 10;
     private static boolean[] seats = new boolean[TOTAL_SEATS];
     private static final int PORT = 6789;
@@ -66,26 +65,22 @@ public class BioskopServer {
                 try {
                     socket.close();
                 } catch (IOException e) {
-                    // Abaikan
+
                 }
             }
         }
 
-        /**
-         * 🚨 METODE BERBAHAYA: Rawan Race Condition 🚨
-         */
         private void bookSeatUnsafe(String clientName, int seatNumber, PrintWriter out) throws InterruptedException {
             if (seatNumber < 0 || seatNumber >= TOTAL_SEATS) {
                 out.println("GAGAL: Nomor kursi tidak valid (0-" + (TOTAL_SEATS - 1) + ")");
                 return;
             }
 
-            // 1. CEK
             if (!seats[seatNumber]) {
                 System.out.println("   (UNSAFE) " + clientName + " menemukan kursi " + seatNumber + " kosong.");
-                // 2. SIMULASI DELAY (Celah kritis)
+
                 Thread.sleep(150);
-                // 3. UBAH
+
                 seats[seatNumber] = true;
                 System.out.println("   (UNSAFE) " + clientName + " >> BERHASIL << memesan kursi " + seatNumber);
                 out.println("BERHASIL: Anda mendapatkan kursi " + seatNumber);
@@ -95,23 +90,19 @@ public class BioskopServer {
             }
         }
 
-        /**
-         * ✅ METODE AMAN: Menggunakan Sinkronisasi ✅
-         */
         private void bookSeatSafe(String clientName, int seatNumber, PrintWriter out) throws InterruptedException {
             if (seatNumber < 0 || seatNumber >= TOTAL_SEATS) {
                 out.println("GAGAL: Nomor kursi tidak valid (0-" + (TOTAL_SEATS - 1) + ")");
                 return;
             }
 
-            // `synchronized` block mengunci objek 'seats'
             synchronized (seats) {
-                // 1. CEK
+
                 if (!seats[seatNumber]) {
                     System.out.println("   (SAFE) " + clientName + " menemukan kursi " + seatNumber + " kosong.");
-                    // 2. SIMULASI DELAY
+
                     Thread.sleep(150);
-                    // 3. UBAH
+
                     seats[seatNumber] = true;
                     System.out.println("   (SAFE) " + clientName + " >> BERHASIL << memesan kursi " + seatNumber);
                     out.println("BERHASIL: Anda mendapatkan kursi " + seatNumber);

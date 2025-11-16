@@ -31,10 +31,10 @@ public class SimulasiKlien {
 
             if (menuPilihan == 1) {
                 jalankanModeInteraktif(scanner);
-                Thread.sleep(500); // Jeda agar respons server sempat tercetak
+                Thread.sleep(500);
             } else if (menuPilihan == 2) {
                 jalankanModeStressTest(scanner);
-                Thread.sleep(3000); // Jeda agar semua thread selesai
+                Thread.sleep(3000);
             } else if (menuPilihan == 3) {
                 System.out.println("Terima kasih, simulasi selesai.");
                 break;
@@ -45,16 +45,13 @@ public class SimulasiKlien {
         scanner.close();
     }
 
-    /**
-     * Mode 1: Bertindak sebagai satu user yang memesan satu kursi.
-     */
     private static void jalankanModeInteraktif(Scanner scanner) {
         System.out.println("\n--- Mode: Pesan 1 Kursi ---");
         System.out.print("Masukkan nama Anda: ");
         String nama = scanner.nextLine();
 
         System.out.print("Pilih Mode Pemesanan [1] UNSAFE (Rawan Error) [2] SAFE (Aman): ");
-        String mode = "SAFE"; // Default
+        String mode = "SAFE";
         try {
             int modePilihan = Integer.parseInt(scanner.nextLine());
             if (modePilihan == 1) {
@@ -79,13 +76,10 @@ public class SimulasiKlien {
         new Thread(new ClientTask(nama, request)).start();
     }
 
-    /**
-     * Mode 2: Meluncurkan banyak user (thread) untuk memperebutkan kursi yang sama.
-     */
     private static void jalankanModeStressTest(Scanner scanner) {
         System.out.println("\n--- Mode: Simulasi Rebutan Kursi ---");
         System.out.print("Pilih Mode Pemesanan [1] UNSAFE (Rawan Error) [2] SAFE (Aman): ");
-        String mode = "SAFE"; // Default
+        String mode = "SAFE";
         try {
             int modePilihan = Integer.parseInt(scanner.nextLine());
             if (modePilihan == 1) {
@@ -122,10 +116,6 @@ public class SimulasiKlien {
         }
     }
 
-    /**
-     * Class ini merepresentasikan satu koneksi user (satu thread)
-     * yang akan terhubung ke server.
-     */
     static class ClientTask implements Runnable {
         private String clientName;
         private String request;
@@ -141,11 +131,10 @@ public class SimulasiKlien {
                     Socket socket = new Socket(SERVER_IP, SERVER_PORT);
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-                // Kirim identitas (nama) dan request (mode:kursi)
+
                 out.println(clientName);
                 out.println(request);
 
-                // Baca dan cetak respons dari server
                 String response = in.readLine();
                 System.out.println("   [Respons Server untuk " + clientName + "]: " + response);
 
